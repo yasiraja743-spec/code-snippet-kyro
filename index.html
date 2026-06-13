@@ -3,24 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>KyroCode · Premium Snippet Manager</title>
+    <title>KyroCode · Luxurious Snippet Vault</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            background: radial-gradient(circle at 20% 30%, #0a0a0c, #020202);
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, monospace;
-            color: #ededed;
+            background: radial-gradient(ellipse at 30% 20%, #0a0a0f, #010101);
+            font-family: 'Inter', 'Segoe UI', system-ui, monospace;
+            color: #eef5ff;
             padding: 2rem 1.5rem;
             min-height: 100vh;
             position: relative;
         }
-
         body::before {
             content: '';
             position: fixed;
@@ -28,394 +34,369 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(45deg, rgba(80,80,100,0.02) 0px, rgba(80,80,100,0.02) 2px, transparent 2px, transparent 8px);
+            background: repeating-linear-gradient(0deg, rgba(80,100,200,0.03) 0px, rgba(80,100,200,0.03) 1px, transparent 1px, transparent 6px);
             pointer-events: none;
             z-index: 0;
         }
-
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 80%, rgba(120,80,220,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
         .app-container {
-            max-width: 1400px;
+            max-width: 1500px;
             margin: 0 auto;
             position: relative;
-            z-index: 2;
+            z-index: 5;
         }
-
         .top-bar {
             position: relative;
             margin-bottom: 2rem;
         }
-
         .dots-btn {
-            background: rgba(25, 25, 32, 0.8);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(160, 160, 190, 0.3);
-            border-radius: 16px;
-            width: 48px;
-            height: 48px;
+            background: rgba(15, 15, 25, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(130, 130, 250, 0.6);
+            border-radius: 20px;
+            width: 54px;
+            height: 54px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1.6rem;
-            color: #cdcdff;
-            transition: 0.2s;
-            box-shadow: 0 0 6px rgba(100,100,200,0.2);
+            font-size: 1.8rem;
+            color: #c4b5ff;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 12px rgba(100,100,240,0.3);
         }
-
         .dots-btn:hover {
-            background: #1f1f2e;
-            border-color: #7a7aff;
-            box-shadow: 0 0 12px #5f5faa;
-            color: white;
+            background: #1a1a2f;
+            border-color: #b794ff;
+            box-shadow: 0 0 22px #7d6eff;
+            transform: scale(1.02);
         }
-
         .dropdown-menu {
             position: absolute;
-            top: 60px;
+            top: 68px;
             left: 0;
-            background: rgba(18, 18, 24, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(120, 120, 170, 0.5);
-            border-radius: 24px;
-            width: 240px;
+            background: rgba(10, 10, 20, 0.96);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(160, 140, 255, 0.5);
+            border-radius: 28px;
+            width: 260px;
             overflow: hidden;
-            z-index: 200;
+            z-index: 300;
             display: none;
             flex-direction: column;
-            box-shadow: 0 20px 30px -12px black, 0 0 0 1px rgba(255,255,255,0.05) inset;
+            box-shadow: 0 25px 40px -12px black, 0 0 0 1px rgba(255,240,255,0.1) inset;
         }
-
         .dropdown-menu.show {
             display: flex;
         }
-
         .dropdown-item {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 14px 20px;
+            gap: 16px;
+            padding: 14px 22px;
             background: transparent;
             border: none;
             width: 100%;
             text-align: left;
-            color: #e2e2ff;
+            color: #e2d9ff;
             font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
             transition: 0.2s;
         }
-
         .dropdown-item i {
-            width: 24px;
-            font-size: 1.1rem;
-            color: #aaaaff;
+            width: 26px;
+            font-size: 1.15rem;
+            color: #b6a6ff;
         }
-
         .dropdown-item:hover {
-            background: rgba(80, 80, 140, 0.3);
+            background: rgba(100, 80, 200, 0.3);
             color: white;
-            border-left: 3px solid #8f8fff;
+            border-left: 4px solid #b77eff;
         }
-
         .admin-greeting {
-            background: linear-gradient(135deg, #13131c, #0a0a10);
-            border-radius: 32px;
-            padding: 1.2rem 2rem;
+            background: linear-gradient(125deg, #11111b, #06060c);
+            border-radius: 40px;
+            padding: 1.4rem 2rem;
             margin-bottom: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            border: 1px solid rgba(120, 120, 200, 0.4);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4), 0 0 8px rgba(80,80,200,0.2);
+            border: 1px solid rgba(100, 100, 220, 0.5);
+            box-shadow: 0 12px 28px -10px black, 0 0 12px rgba(80,80,200,0.2);
         }
-
         .admin-greeting h2 {
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             font-weight: 500;
-            background: linear-gradient(135deg, #f0f0ff, #b0b0ff);
+            background: linear-gradient(125deg, #ffffff, #bb99ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             letter-spacing: -0.3px;
         }
-
-        .logout-icon {
-            background: rgba(30,30,45,0.8);
-            border: 1px solid #5a5a8a;
-            padding: 8px 20px;
+        .logout-icon, .export-import {
+            background: rgba(30,30,55,0.8);
+            border: 1px solid #6a5acd;
+            padding: 8px 22px;
             border-radius: 60px;
             cursor: pointer;
             transition: 0.2s;
+            margin-left: 8px;
         }
-
-        .logout-icon:hover {
-            background: #3a2a4a;
-            border-color: #bb88ff;
-            box-shadow: 0 0 8px #aa88ff;
+        .logout-icon:hover, .export-import:hover {
+            background: #2a2a4a;
+            border-color: #bb99ff;
+            box-shadow: 0 0 12px #9f8aff;
         }
-
         .add-snippet-panel, .reports-panel {
-            background: rgba(12, 12, 18, 0.7);
-            backdrop-filter: blur(5px);
-            border-radius: 32px;
-            padding: 1.6rem;
+            background: rgba(12, 12, 24, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 36px;
+            padding: 1.8rem;
             margin-bottom: 2rem;
-            border: 1px solid rgba(100, 100, 150, 0.4);
-            box-shadow: 0 10px 20px -8px black;
+            border: 1px solid rgba(110, 100, 200, 0.45);
+            box-shadow: 0 12px 28px -8px black;
         }
-
         .form-group input, .form-group select, .form-group textarea {
-            background: #0c0c12;
-            border: 1px solid #2e2e44;
-            border-radius: 20px;
-            padding: 12px 16px;
-            color: white;
+            background: #0b0b12;
+            border: 1px solid #3a3a66;
+            border-radius: 24px;
+            padding: 12px 18px;
+            color: #f0f0ff;
             font-family: 'Fira Code', monospace;
             transition: 0.2s;
         }
-
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: #8f8fff;
-            box-shadow: 0 0 10px rgba(100,100,255,0.4);
+            border-color: #a286ff;
+            box-shadow: 0 0 14px rgba(140,100,255,0.5);
             outline: none;
         }
-
         button.pasang-btn {
-            background: linear-gradient(95deg, #2a2a3a, #1f1f2c);
-            border: 1px solid #7a7aff;
+            background: linear-gradient(95deg, #2a2a44, #1b1b2c);
+            border: 1px solid #8f7eff;
             border-radius: 60px;
-            padding: 10px 28px;
+            padding: 10px 32px;
             font-weight: bold;
             color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
             transition: 0.2s;
         }
-
         button.pasang-btn:hover {
             background: #3f3f66;
-            border-color: #b7aaff;
-            box-shadow: 0 0 14px #7f6eff;
-            transform: scale(0.98);
+            border-color: #c6b0ff;
+            box-shadow: 0 0 16px #aa9aff;
         }
-
         .snippets-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 1.8rem;
-            margin-top: 1.2rem;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
         }
-
         .snippet-card {
-            background: rgba(18, 18, 26, 0.8);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(120, 120, 170, 0.5);
-            border-radius: 32px;
+            background: rgba(14, 14, 24, 0.85);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(140, 120, 220, 0.6);
+            border-radius: 38px;
             padding: 1.5rem;
-            transition: 0.25s ease;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: 0.2s ease;
+            box-shadow: 0 12px 24px -12px black;
         }
-
         .snippet-card:hover {
-            border-color: #a48eff;
-            box-shadow: 0 12px 28px -4px rgba(90, 70, 200, 0.3), 0 0 0 1px rgba(255,255,255,0.05) inset;
-            transform: translateY(-3px);
+            border-color: #cbb2ff;
+            box-shadow: 0 20px 35px -12px rgba(100, 70, 200, 0.4), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            transform: translateY(-4px);
         }
-
         .code-content {
-            background: #030308;
+            background: #010105;
             padding: 1rem;
-            border-radius: 20px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
-            line-height: 1.45;
-            border-left: 3px solid #8d7aff;
+            border-radius: 28px;
+            font-size: 0.85rem;
             overflow-x: auto;
+            border-left: 4px solid #9b7eff;
         }
-
         .icon-btn {
-            background: rgba(40,40,60,0.6);
+            background: rgba(50,50,80,0.7);
             border-radius: 50%;
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             margin: 0 4px;
             transition: 0.2s;
         }
-
         .icon-btn:hover {
-            background: #5f5faa;
+            background: #6f5fcf;
             color: white;
-            box-shadow: 0 0 8px #aaaaff;
+            box-shadow: 0 0 12px #bbaaff;
         }
-
         .report-item, .contact-item {
-            background: #0e0e16;
-            border-radius: 24px;
+            background: #0e0e1a;
+            border-radius: 28px;
             padding: 1rem;
             margin-bottom: 1rem;
-            border: 1px solid #2e2e48;
-            border-left: 4px solid #8e7eff;
+            border-left: 6px solid #9f8eff;
         }
-
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(16px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
-
         .modal-content {
-            background: rgba(18, 18, 28, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(130, 130, 220, 0.6);
-            border-radius: 48px;
+            background: rgba(16, 16, 28, 0.96);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(150, 130, 255, 0.7);
+            border-radius: 52px;
             padding: 2rem;
             width: 90%;
-            max-width: 500px;
-            box-shadow: 0 30px 40px -15px black, 0 0 0 1px rgba(255,255,255,0.05) inset;
+            max-width: 550px;
+            box-shadow: 0 35px 45px -12px black;
         }
-
         .flex-buttons {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
             margin-top: 1.5rem;
         }
-
-        .flex-buttons button, .flex-buttons a button {
-            background: #23233a;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 500;
-        }
-
         hr {
-            margin: 1.2rem 0;
-            border-color: #3a3a5a;
+            margin: 1rem 0;
+            border-color: #4a4a7a;
         }
-
         .empty-state {
             text-align: center;
-            padding: 2.2rem;
-            color: #a0a0c0;
+            padding: 2.5rem;
+            color: #b0aaff;
         }
-
-        ::-webkit-scrollbar {
-            width: 6px;
+        pre[class*="language-"] {
+            border-radius: 20px;
+            margin: 0;
+            background: #020208;
         }
-        ::-webkit-scrollbar-track {
-            background: #111;
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid #6a6aff;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #6a6ac0;
-            border-radius: 10px;
+        .copy-feedback {
+            font-size: 0.7rem;
+            color: #bbffaa;
+            margin-top: 8px;
+            text-align: right;
         }
     </style>
 </head>
 <body>
 <div class="app-container">
     <div class="top-bar">
-        <div class="dots-btn" id="dotsMenuBtn">
-            <i class="fas fa-ellipsis-h"></i>
-        </div>
+        <div class="dots-btn" id="dotsMenuBtn"><i class="fas fa-ellipsis-h"></i></div>
         <div class="dropdown-menu" id="dropdownMenu"></div>
     </div>
-
     <div id="adminGreetingPanel" style="display: none;"></div>
     <div id="addSnippetPanel" style="display: none;" class="add-snippet-panel"></div>
     <div id="reportsPanel" style="display: none;" class="reports-panel"></div>
-
-    <div class="snippets-title" style="display: flex; gap: 12px; align-items: center; margin-bottom: 1.2rem;">
-        <i class="fas fa-code" style="font-size: 1.3rem; color: #aa9eff;"></i>
-        <span style="font-weight: 500; letter-spacing: 0.5px;">KODE TERSIMPAN</span>
+    <div class="snippets-title" style="display: flex; gap: 14px; align-items: center; margin-bottom: 1.2rem;">
+        <i class="fas fa-gem" style="font-size: 1.5rem; color: #b58eff;"></i>
+        <span style="font-weight: 600; letter-spacing: 1px;">PREMIUM CODE VAULT</span>
     </div>
     <div id="snippetsContainer" class="snippets-grid"></div>
 </div>
-
-<!-- MODALS -->
-<div id="bugModal" class="modal"><div class="modal-content"><h3><i class="fas fa-bug"></i> Laporkan Bug</h3><textarea id="bugDesc" rows="4" placeholder="Jelaskan bug secara detail..."></textarea><div class="flex-buttons"><button id="closeBugModal">Batal</button><button id="submitBug" style="background:#5f3a7a;">Kirim Laporan</button></div></div></div>
-
+<div id="bugModal" class="modal"><div class="modal-content"><h3><i class="fas fa-bug"></i> Laporkan Bug</h3><textarea id="bugDesc" rows="4" placeholder="Jelaskan bug secara detail..."></textarea><div class="flex-buttons"><button id="closeBugModal">Batal</button><button id="submitBug">Kirim Laporan</button></div></div></div>
 <div id="contactModal" class="modal"><div class="modal-content"><h3><i class="fas fa-headset"></i> Hubungi Admin</h3><textarea id="contactMsg" rows="3" placeholder="Tulis pesanmu (akan tersimpan & dilihat admin)"></textarea><div class="flex-buttons"><button id="sendContactMsgBtn"><i class="fas fa-paper-plane"></i> Kirim Pesan</button><a href="https://t.me/sigantengbahlil" target="_blank" style="text-decoration:none;"><button><i class="fab fa-telegram"></i> Telegram</button></a><a href="https://wa.me/6285664633021" target="_blank" style="text-decoration:none;"><button><i class="fab fa-whatsapp"></i> WhatsApp</button></a><button id="closeContactModal">Tutup</button></div></div></div>
-
-<div id="loginModal" class="modal"><div class="modal-content"><h3><i class="fas fa-lock"></i> Login Admin</h3><input type="text" id="loginUser" placeholder="Username" style="width:100%; margin-bottom:12px; background:#111; border:1px solid #6a6aff;"><input type="password" id="loginPass" placeholder="Password" style="width:100%; background:#111; border:1px solid #6a6aff;"><div class="flex-buttons"><button id="closeLoginModal">Batal</button><button id="doLogin" style="background:#2a2a6a;">Verifikasi</button></div></div></div>
-
-<div id="editModal" class="modal"><div class="modal-content"><h3>Edit Snippet</h3><select id="editTypeSelect" style="width:100%; margin-bottom:12px;"><option value="js">JS</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option></select><textarea id="editCodeArea" rows="5" style="width:100%;"></textarea><div class="flex-buttons"><button id="closeEditModal">Batal</button><button id="saveEditSnippet">Simpan</button></div></div></div>
-
+<div id="loginModal" class="modal"><div class="modal-content"><h3><i class="fas fa-lock"></i> Login Admin</h3><input type="text" id="loginUser" placeholder="Username"><input type="password" id="loginPass" placeholder="Password" style="margin-top:12px;"><div class="flex-buttons"><button id="closeLoginModal">Batal</button><button id="doLogin">Verifikasi</button></div></div></div>
+<div id="editModal" class="modal"><div class="modal-content"><h3>Edit Snippet</h3><select id="editTypeSelect"><option value="js">JS</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option><option value="bash">Bash</option></select><textarea id="editCodeArea" rows="6" style="margin-top:12px;"></textarea><div class="flex-buttons"><button id="closeEditModal">Batal</button><button id="saveEditSnippet">Simpan</button></div></div></div>
 <script>
-    (function() {
-        // Konfigurasi
-        const SNIPPETS_KEY = "kyro_snippets";
-        const BUGS_KEY = "kyro_bug_reports";
-        const CONTACTS_KEY = "kyro_contact_messages";
+    (function(){
+        const SNIPPETS_KEY = "kyro_snippets_lux";
+        const BUGS_KEY = "kyro_bug_reports_v2";
+        const CONTACTS_KEY = "kyro_contact_messages_v2";
         const ADMIN_USER = "Kyro";
         const ADMIN_PASS = "yasirsukakecebong";
-
         let isAdmin = false;
         let currentEditId = null;
         let snippets = [];
 
-        function loadSnippets() {
+        function loadSnippets(){
             const stored = localStorage.getItem(SNIPPETS_KEY);
             if(stored) snippets = JSON.parse(stored);
-            if(!snippets.length) snippets = [
-                { id: "ex1", type: "js", code: "console.log('KyroCode Premium');" },
-                { id: "ex2", type: "python", code: "print('Halo dari sisi gelap')" },
-                { id: "ex3", type: "html", code: "<div class='glow'>Light effect</div>" }
-            ];
-            saveSnippets();
+            if(!snippets.length){
+                snippets = [
+                    { id: "init1", type: "js", code: "console.log('✨ KyroCode Premium Vault');\nfunction glowEffect() { return 'neon'; }" },
+                    { id: "init2", type: "python", code: "print('Syntax highlighting aktif')\nfor i in range(5):\n    print(f'Line {i}')" },
+                    { id: "init3", type: "html", code: "<div class='luxury-card'>\n  <h1>Kode mewah</h1>\n</div>" }
+                ];
+                saveSnippets();
+            }
         }
-        function saveSnippets() { localStorage.setItem(SNIPPETS_KEY, JSON.stringify(snippets)); }
+        function saveSnippets(){ localStorage.setItem(SNIPPETS_KEY, JSON.stringify(snippets)); }
+        function getBugs(){ return JSON.parse(localStorage.getItem(BUGS_KEY) || "[]"); }
+        function saveBugs(b){ localStorage.setItem(BUGS_KEY, JSON.stringify(b)); }
+        function getContacts(){ return JSON.parse(localStorage.getItem(CONTACTS_KEY) || "[]"); }
+        function saveContacts(c){ localStorage.setItem(CONTACTS_KEY, JSON.stringify(c)); }
 
-        function getBugs() { return JSON.parse(localStorage.getItem(BUGS_KEY) || "[]"); }
-        function saveBugs(bugs) { localStorage.setItem(BUGS_KEY, JSON.stringify(bugs)); }
-        function getContacts() { return JSON.parse(localStorage.getItem(CONTACTS_KEY) || "[]"); }
-        function saveContacts(contacts) { localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts)); }
-
-        function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
-        function escapeAttr(str) { return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-
-        function renderSnippets() {
+        function escapeHtml(str){ return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+        function getLangFromType(type){
+            if(type === 'js') return 'javascript';
+            if(type === 'python') return 'python';
+            if(type === 'html') return 'markup';
+            if(type === 'css') return 'css';
+            if(type === 'bash') return 'bash';
+            return 'javascript';
+        }
+        function renderSnippets(){
             const container = document.getElementById("snippetsContainer");
-            if(!snippets.length) { container.innerHTML = '<div class="empty-state"><i class="fas fa-database"></i> Belum ada snippet. Admin bisa tambah.</div>'; return; }
+            if(!snippets.length){
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-database"></i> Belum ada snippet. Admin bisa menambahkan.</div>';
+                return;
+            }
             let html = "";
             snippets.forEach(s => {
+                const lang = getLangFromType(s.type);
+                const escapedCode = s.code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 html += `<div class="snippet-card" data-id="${s.id}">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                                <span style="background:#1f1f30; padding:4px 14px; border-radius:40px; font-size:0.7rem; font-weight:600;">${s.type.toUpperCase()}</span>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                                <span style="background:linear-gradient(145deg,#2a2a4a,#1e1e3a); padding:5px 18px; border-radius:60px; font-size:0.7rem; font-weight:700; letter-spacing:1px;">${s.type.toUpperCase()}</span>
                                 <div>
-                                    <button class="icon-btn copy-btn" data-code="${escapeAttr(s.code)}"><i class="fas fa-copy"></i></button>
+                                    <button class="icon-btn copy-btn" data-code="${s.code.replace(/"/g, '&quot;')}"><i class="fas fa-copy"></i></button>
                                     ${isAdmin ? `<button class="icon-btn edit-btn" data-id="${s.id}"><i class="fas fa-edit"></i></button>
                                                 <button class="icon-btn delete-btn" data-id="${s.id}"><i class="fas fa-trash-alt"></i></button>` : ''}
                                 </div>
                             </div>
-                            <div class="code-content"><pre style="margin:0; font-family:monospace;">${escapeHtml(s.code)}</pre></div>
+                            <div class="code-content line-numbers">
+                                <pre class="language-${lang}"><code class="language-${lang}">${escapedCode}</code></pre>
+                            </div>
+                            <div class="copy-feedback" id="copyMsg-${s.id}" style="display:none;">✓ Tersalin</div>
                         </div>`;
             });
             container.innerHTML = html;
-
+            Prism.highlightAll();
             document.querySelectorAll('.copy-btn').forEach(btn => {
                 btn.addEventListener('click', async (e) => {
                     const code = btn.getAttribute('data-code');
                     await navigator.clipboard.writeText(code);
-                    alert("Kode tersalin ke clipboard");
+                    alert("Kode tersalin ke clipboard!");
                 });
             });
-            if(isAdmin) {
+            if(isAdmin){
                 document.querySelectorAll('.edit-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => openEditModal(btn.getAttribute('data-id')));
                 });
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        if(confirm("Hapus snippet ini?")) {
+                        if(confirm("Hapus snippet ini?")){
                             snippets = snippets.filter(s => s.id !== btn.getAttribute('data-id'));
                             saveSnippets();
                             renderSnippets();
@@ -426,8 +407,8 @@
             }
         }
 
-        function renderAdminPanels() {
-            if(!isAdmin) {
+        function renderAdminPanels(){
+            if(!isAdmin){
                 document.getElementById("adminGreetingPanel").style.display = "none";
                 document.getElementById("addSnippetPanel").style.display = "none";
                 document.getElementById("reportsPanel").style.display = "none";
@@ -436,60 +417,87 @@
             document.getElementById("adminGreetingPanel").style.display = "block";
             document.getElementById("addSnippetPanel").style.display = "block";
             document.getElementById("reportsPanel").style.display = "block";
-
             document.getElementById("adminGreetingPanel").innerHTML = `
                 <div class="admin-greeting">
                     <h2><i class="fas fa-crown"></i> HALO DEVELOPER KYRO</h2>
-                    <button class="logout-icon" id="logoutAdminBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    <div><button class="export-import" id="exportDataBtn"><i class="fas fa-download"></i> Ekspor Snippet</button>
+                    <button class="export-import" id="importDataBtn"><i class="fas fa-upload"></i> Impor Snippet</button>
+                    <button class="logout-icon" id="logoutAdminBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
                 </div>`;
             document.getElementById("logoutAdminBtn")?.addEventListener("click", logout);
-
+            document.getElementById("exportDataBtn")?.addEventListener("click", () => {
+                const dataStr = JSON.stringify(snippets, null, 2);
+                const blob = new Blob([dataStr], {type: "application/json"});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `kyro_snippets_${Date.now()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+            document.getElementById("importDataBtn")?.addEventListener("click", () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'application/json';
+                input.onchange = e => {
+                    const file = e.target.files[0];
+                    if(!file) return;
+                    const reader = new FileReader();
+                    reader.onload = ev => {
+                        try{
+                            const imported = JSON.parse(ev.target.result);
+                            if(Array.isArray(imported)){
+                                snippets = imported;
+                                saveSnippets();
+                                renderSnippets();
+                                alert("Impor berhasil! Snippet diperbarui.");
+                            } else throw new Error();
+                        } catch(err){ alert("File JSON tidak valid"); }
+                    };
+                    reader.readAsText(file);
+                };
+                input.click();
+            });
             document.getElementById("addSnippetPanel").innerHTML = `
-                <h3 style="margin-bottom:1rem;"><i class="fas fa-plus-circle"></i> Mau menambahkan kode? silahkan send code</h3>
+                <h3 style="margin-bottom:1rem;"><i class="fas fa-plus-circle"></i> Tambah Kode Baru (syntax akan tampil indah)</h3>
                 <div class="form-row" style="display:flex; gap:1rem; flex-wrap:wrap;">
-                    <div class="form-group" style="flex:1;"><label>Jenis Kode</label><select id="newType"><option value="js">JavaScript</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option></select></div>
-                    <div class="form-group" style="flex:2;"><label>Kode snippet</label><textarea id="newCode" rows="3" placeholder="console.log('contoh doang') type js"></textarea></div>
+                    <div class="form-group" style="flex:1;"><label>Jenis Kode</label><select id="newType"><option value="js">JavaScript</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option><option value="bash">Bash</option></select></div>
+                    <div class="form-group" style="flex:2;"><label>Kode snippet</label><textarea id="newCode" rows="3" placeholder="console.log('code kamu');"></textarea></div>
                 </div>
                 <button class="pasang-btn" id="pasangBtn"><i class="fas fa-plug"></i> PASANG</button>`;
             document.getElementById("pasangBtn")?.addEventListener("click", () => {
                 const type = document.getElementById("newType").value;
                 const code = document.getElementById("newCode").value.trim();
-                if(!code) { alert("Kode tidak boleh kosong"); return; }
-                snippets.push({ id: Date.now() + "-" + Math.random(), type, code });
+                if(!code){ alert("Kode tidak boleh kosong"); return; }
+                snippets.push({ id: Date.now() + "-" + Math.random().toString(36), type, code });
                 saveSnippets();
                 renderSnippets();
                 document.getElementById("newCode").value = "";
             });
-
             const bugs = getBugs();
             const contacts = getContacts();
-            let bugsHtml = `<h3><i class="fas fa-bug"></i> LAPORAN BUG DARI USER</h3>`;
-            if(bugs.length === 0) bugsHtml += `<div class="empty-state"><i class="fas fa-inbox"></i> Belum ada laporan bug</div>`;
-            else {
-                bugs.forEach((b, idx) => {
-                    bugsHtml += `<div class="report-item"><strong>${new Date(b.date).toLocaleString()}</strong><br/>${escapeHtml(b.message)}<br/><button class="delete-report" data-type="bug" data-idx="${idx}" style="margin-top:8px; background:#2f1f3f;">Hapus laporan</button></div>`;
-                });
-            }
+            let bugsHtml = `<h3><i class="fas fa-bug"></i> LAPORAN BUG MASUK</h3>`;
+            if(bugs.length === 0) bugsHtml += `<div class="empty-state">Tidak ada laporan</div>`;
+            else bugs.forEach((b, idx) => {
+                bugsHtml += `<div class="report-item"><strong>${new Date(b.date).toLocaleString()}</strong><br/>${escapeHtml(b.message)}<br/><button class="delete-report" data-type="bug" data-idx="${idx}" style="margin-top:8px;">Hapus</button></div>`;
+            });
             let contactsHtml = `<h3><i class="fas fa-envelope"></i> PESAN CONTACT ADMIN</h3>`;
-            if(contacts.length === 0) contactsHtml += `<div class="empty-state"><i class="fas fa-comment-slash"></i> Belum ada pesan dari pengunjung</div>`;
-            else {
-                contacts.forEach((c, idx) => {
-                    contactsHtml += `<div class="contact-item"><strong>${new Date(c.date).toLocaleString()}</strong><br/>${escapeHtml(c.message)}<br/><button class="delete-report" data-type="contact" data-idx="${idx}" style="margin-top:8px;">Hapus pesan</button></div>`;
-                });
-            }
+            if(contacts.length === 0) contactsHtml += `<div class="empty-state">Belum ada pesan</div>`;
+            else contacts.forEach((c, idx) => {
+                contactsHtml += `<div class="contact-item"><strong>${new Date(c.date).toLocaleString()}</strong><br/>${escapeHtml(c.message)}<br/><button class="delete-report" data-type="contact" data-idx="${idx}" style="margin-top:8px;">Hapus</button></div>`;
+            });
             document.getElementById("reportsPanel").innerHTML = `<div style="display:flex; flex-direction:column; gap:1.8rem;">${bugsHtml}<hr/>${contactsHtml}</div>`;
-
             document.querySelectorAll(".delete-report").forEach(btn => {
                 btn.addEventListener("click", (e) => {
                     const type = btn.getAttribute("data-type");
                     const idx = parseInt(btn.getAttribute("data-idx"));
-                    if(type === "bug") {
+                    if(type === "bug"){
                         let arr = getBugs();
-                        arr.splice(idx, 1);
+                        arr.splice(idx,1);
                         saveBugs(arr);
                     } else {
                         let arr = getContacts();
-                        arr.splice(idx, 1);
+                        arr.splice(idx,1);
                         saveContacts(arr);
                     }
                     renderAdminPanels();
@@ -497,25 +505,23 @@
             });
         }
 
-        // Modal handlers
-        function openBugModal() { document.getElementById("bugModal").style.display = "flex"; }
-        function closeBugModal() { document.getElementById("bugModal").style.display = "none"; }
-        function submitBug() {
+        function openBugModal(){ document.getElementById("bugModal").style.display = "flex"; }
+        function closeBugModal(){ document.getElementById("bugModal").style.display = "none"; }
+        function submitBug(){
             const msg = document.getElementById("bugDesc").value.trim();
-            if(!msg) { alert("Tulis laporan bug."); return; }
+            if(!msg){ alert("Tulis laporan bug."); return; }
             const bugs = getBugs();
             bugs.push({ date: new Date().toISOString(), message: msg });
             saveBugs(bugs);
-            alert("Laporan bug terkirim.");
+            alert("Laporan bug terkirim. Admin akan lihat.");
             document.getElementById("bugDesc").value = "";
             closeBugModal();
         }
-
-        function openContactModal() { document.getElementById("contactModal").style.display = "flex"; }
-        function closeContactModal() { document.getElementById("contactModal").style.display = "none"; }
-        function sendContactMsg() {
+        function openContactModal(){ document.getElementById("contactModal").style.display = "flex"; }
+        function closeContactModal(){ document.getElementById("contactModal").style.display = "none"; }
+        function sendContactMsg(){
             const msg = document.getElementById("contactMsg").value.trim();
-            if(!msg) { alert("Tulis pesan terlebih dahulu."); return; }
+            if(!msg){ alert("Tulis pesan."); return; }
             const contacts = getContacts();
             contacts.push({ date: new Date().toISOString(), message: msg });
             saveContacts(contacts);
@@ -523,31 +529,28 @@
             document.getElementById("contactMsg").value = "";
             closeContactModal();
         }
-
-        function openLoginModal() { document.getElementById("loginModal").style.display = "flex"; }
-        function closeLoginModal() { document.getElementById("loginModal").style.display = "none"; }
-        function onLogin() {
+        function openLoginModal(){ document.getElementById("loginModal").style.display = "flex"; }
+        function closeLoginModal(){ document.getElementById("loginModal").style.display = "none"; }
+        function onLogin(){
             const user = document.getElementById("loginUser").value;
             const pass = document.getElementById("loginPass").value;
-            if(user === ADMIN_USER && pass === ADMIN_PASS) {
+            if(user === ADMIN_USER && pass === ADMIN_PASS){
                 isAdmin = true;
-                sessionStorage.setItem("kyro_admin", "true");
+                sessionStorage.setItem("kyro_admin_lux", "true");
                 renderAdminPanels();
                 renderSnippets();
                 updateDropdownMenu();
                 closeLoginModal();
-            } else { alert("Username atau password salah!"); }
+            } else alert("Username atau password salah!");
         }
-
-        function logout() {
+        function logout(){
             isAdmin = false;
-            sessionStorage.removeItem("kyro_admin");
+            sessionStorage.removeItem("kyro_admin_lux");
             renderAdminPanels();
             renderSnippets();
             updateDropdownMenu();
         }
-
-        function openEditModal(id) {
+        function openEditModal(id){
             const snip = snippets.find(s => s.id === id);
             if(!snip) return;
             currentEditId = id;
@@ -555,13 +558,13 @@
             document.getElementById("editCodeArea").value = snip.code;
             document.getElementById("editModal").style.display = "flex";
         }
-        function saveEdit() {
+        function saveEdit(){
             if(!currentEditId) return;
             const newType = document.getElementById("editTypeSelect").value;
             const newCode = document.getElementById("editCodeArea").value.trim();
-            if(!newCode) { alert("Kode tidak boleh kosong"); return; }
+            if(!newCode){ alert("Kode tidak boleh kosong"); return; }
             const idx = snippets.findIndex(s => s.id === currentEditId);
-            if(idx !== -1) {
+            if(idx !== -1){
                 snippets[idx].type = newType;
                 snippets[idx].code = newCode;
                 saveSnippets();
@@ -570,11 +573,10 @@
             document.getElementById("editModal").style.display = "none";
             currentEditId = null;
         }
-
-        function updateDropdownMenu() {
+        function updateDropdownMenu(){
             const menu = document.getElementById("dropdownMenu");
             let items = [];
-            if(!isAdmin) {
+            if(!isAdmin){
                 items = [
                     { icon: "fas fa-bug", label: "Lapor Bug", action: "bug" },
                     { icon: "fas fa-headset", label: "Contact Admin", action: "contact" },
@@ -599,43 +601,28 @@
                 });
             });
         }
-
-        // Event listeners for dots and dropdown
-        function initDropdown() {
-            const dotsBtn = document.getElementById("dotsMenuBtn");
-            const dropdown = document.getElementById("dropdownMenu");
-            if(dotsBtn && dropdown) {
-                dotsBtn.addEventListener("click", function(e) {
-                    e.stopPropagation();
-                    dropdown.classList.toggle("show");
-                });
-                document.addEventListener("click", function(e) {
-                    if(!dotsBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                        dropdown.classList.remove("show");
-                    }
-                });
-            }
+        function init(){
+            loadSnippets();
+            const sess = sessionStorage.getItem("kyro_admin_lux");
+            if(sess === "true") isAdmin = true;
+            renderSnippets();
+            renderAdminPanels();
+            updateDropdownMenu();
+            const dots = document.getElementById("dotsMenuBtn");
+            const dd = document.getElementById("dropdownMenu");
+            dots.addEventListener("click", (e) => { e.stopPropagation(); dd.classList.toggle("show"); });
+            document.addEventListener("click", (e) => { if(!dots.contains(e.target) && !dd.contains(e.target)) dd.classList.remove("show"); });
+            document.getElementById("closeBugModal")?.addEventListener("click", closeBugModal);
+            document.getElementById("submitBug")?.addEventListener("click", submitBug);
+            document.getElementById("closeContactModal")?.addEventListener("click", closeContactModal);
+            document.getElementById("sendContactMsgBtn")?.addEventListener("click", sendContactMsg);
+            document.getElementById("closeLoginModal")?.addEventListener("click", closeLoginModal);
+            document.getElementById("doLogin")?.addEventListener("click", onLogin);
+            document.getElementById("closeEditModal")?.addEventListener("click", () => { document.getElementById("editModal").style.display = "none"; });
+            document.getElementById("saveEditSnippet")?.addEventListener("click", saveEdit);
+            window.onclick = (e) => { if(e.target.classList && e.target.classList.contains("modal")) e.target.style.display = "none"; };
         }
-
-        // Initialize
-        loadSnippets();
-        const sessionAdmin = sessionStorage.getItem("kyro_admin");
-        if(sessionAdmin === "true") isAdmin = true;
-        renderSnippets();
-        renderAdminPanels();
-        updateDropdownMenu();
-        initDropdown();
-
-        // Modal buttons
-        document.getElementById("closeBugModal")?.addEventListener("click", closeBugModal);
-        document.getElementById("submitBug")?.addEventListener("click", submitBug);
-        document.getElementById("closeContactModal")?.addEventListener("click", closeContactModal);
-        document.getElementById("sendContactMsgBtn")?.addEventListener("click", sendContactMsg);
-        document.getElementById("closeLoginModal")?.addEventListener("click", closeLoginModal);
-        document.getElementById("doLogin")?.addEventListener("click", onLogin);
-        document.getElementById("closeEditModal")?.addEventListener("click", () => { document.getElementById("editModal").style.display = "none"; });
-        document.getElementById("saveEditSnippet")?.addEventListener("click", saveEdit);
-        window.onclick = (e) => { if(e.target.classList && e.target.classList.contains("modal")) e.target.style.display = "none"; };
+        init();
     })();
 </script>
 </body>
