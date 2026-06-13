@@ -116,7 +116,30 @@
             padding: 1.5rem; transition: 0.2s; box-shadow: 0 12px 24px -12px black;
         }
         .snippet-card:hover { border-color: #cbb2ff; transform: translateY(-4px); box-shadow: 0 20px 35px -12px rgba(100,70,200,0.4); }
-        .code-content { background: #010105; padding: 1rem; border-radius: 28px; overflow-x: auto; border-left: 4px solid #9b7eff; }
+        /* PERBAIKAN SCROLL & FONT ADAPTIF */
+        .code-content {
+            background: #010105;
+            padding: 1rem;
+            border-radius: 28px;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 450px;
+            border-left: 4px solid #9b7eff;
+            font-size: 0.85rem;
+        }
+        .code-content pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: 'Fira Code', monospace;
+            font-size: inherit;
+            margin: 0;
+        }
+        @media (max-width: 640px) {
+            .code-content {
+                font-size: 0.7rem;
+                max-height: 350px;
+            }
+        }
         .icon-btn {
             background: rgba(50,50,80,0.7); border-radius: 50%; width: 36px; height: 36px;
             display: inline-flex; align-items: center; justify-content: center; margin: 0 4px;
@@ -159,7 +182,7 @@
     </div>
     <div id="snippetsContainer" class="snippets-grid"></div>
 </div>
-<!-- Modal2 sama seperti sebelumnya (bug, contact, login, edit) -->
+<!-- Modal  -->
 <div id="bugModal" class="modal"><div class="modal-content"><h3><i class="fas fa-bug"></i> Laporkan Bug</h3><textarea id="bugDesc" rows="4" placeholder="Jelaskan bug..."></textarea><div class="flex-buttons"><button id="closeBugModal">Batal</button><button id="submitBug">Kirim</button></div></div></div>
 <div id="contactModal" class="modal"><div class="modal-content"><h3><i class="fas fa-headset"></i> Hubungi Admin</h3><textarea id="contactMsg" rows="3" placeholder="Tulis pesan..."></textarea><div class="flex-buttons"><button id="sendContactMsgBtn"><i class="fas fa-paper-plane"></i> Kirim</button><a href="https://t.me/sigantengbahlil" target="_blank"><button><i class="fab fa-telegram"></i> Telegram</button></a><a href="https://wa.me/6285664633021" target="_blank"><button><i class="fab fa-whatsapp"></i> WhatsApp</button></a><button id="closeContactModal">Tutup</button></div></div></div>
 <div id="loginModal" class="modal"><div class="modal-content"><h3><i class="fas fa-lock"></i> Login Admin</h3><input type="text" id="loginUser" placeholder="Username"><input type="password" id="loginPass" placeholder="Password" style="margin-top:12px;"><div class="flex-buttons"><button id="closeLoginModal">Batal</button><button id="doLogin">Verifikasi</button></div></div></div>
@@ -180,8 +203,8 @@
             if(stored) snippets = JSON.parse(stored);
             if(!snippets || !snippets.length){
                 snippets = [
-                    { id: "init1", type: "js", code: "console.log('✨ KyroCode');\nfunction neon() { return 'glow'; }" },
-                    { id: "init2", type: "python", code: "print('Syntax highlighting aktif')" }
+                    { id: "init1", type: "js", code: "console.log('✨ KyroCode');\nfunction neon() { return 'glow'; }", filename: "example.js" },
+                    { id: "init2", type: "python", code: "print('Syntax highlighting aktif')", filename: "demo.py" }
                 ];
                 saveData();
             }
@@ -206,7 +229,7 @@
                 const safeCode = s.code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 html += `<div class="snippet-card" data-id="${s.id}">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                                <span style="background:linear-gradient(145deg,#2a2a4a,#1e1e3a); padding:5px 18px; border-radius:60px; font-size:0.7rem; font-weight:700;">${s.type.toUpperCase()} • ${s.filename || 'snippet'}</span>
+                                <span style="background:linear-gradient(145deg,#2a2a4a,#1e1e3a); padding:5px 18px; border-radius:60px; font-size:0.7rem; font-weight:700;">${s.type.toUpperCase()} • ${escapeHtml(s.filename || 'snippet')}</span>
                                 <div>
                                     <button class="icon-btn copy-btn" data-code="${s.code.replace(/"/g, '&quot;')}"><i class="fas fa-copy"></i></button>
                                     ${isAdmin ? `<button class="icon-btn edit-btn" data-id="${s.id}"><i class="fas fa-edit"></i></button>
