@@ -116,7 +116,6 @@
             padding: 1.5rem; transition: 0.2s; box-shadow: 0 12px 24px -12px black;
         }
         .snippet-card:hover { border-color: #cbb2ff; transform: translateY(-4px); box-shadow: 0 20px 35px -12px rgba(100,70,200,0.4); }
-        /* PERBAIKAN SCROLL & FONT ADAPTIF */
         .code-content {
             background: #010105;
             padding: 1rem;
@@ -135,10 +134,7 @@
             margin: 0;
         }
         @media (max-width: 640px) {
-            .code-content {
-                font-size: 0.7rem;
-                max-height: 350px;
-            }
+            .code-content { font-size: 0.7rem; max-height: 350px; }
         }
         .icon-btn {
             background: rgba(50,50,80,0.7); border-radius: 50%; width: 36px; height: 36px;
@@ -182,11 +178,18 @@
     </div>
     <div id="snippetsContainer" class="snippets-grid"></div>
 </div>
-<!-- Modal  -->
+
 <div id="bugModal" class="modal"><div class="modal-content"><h3><i class="fas fa-bug"></i> Laporkan Bug</h3><textarea id="bugDesc" rows="4" placeholder="Jelaskan bug..."></textarea><div class="flex-buttons"><button id="closeBugModal">Batal</button><button id="submitBug">Kirim</button></div></div></div>
 <div id="contactModal" class="modal"><div class="modal-content"><h3><i class="fas fa-headset"></i> Hubungi Admin</h3><textarea id="contactMsg" rows="3" placeholder="Tulis pesan..."></textarea><div class="flex-buttons"><button id="sendContactMsgBtn"><i class="fas fa-paper-plane"></i> Kirim</button><a href="https://t.me/sigantengbahlil" target="_blank"><button><i class="fab fa-telegram"></i> Telegram</button></a><a href="https://wa.me/6285664633021" target="_blank"><button><i class="fab fa-whatsapp"></i> WhatsApp</button></a><button id="closeContactModal">Tutup</button></div></div></div>
 <div id="loginModal" class="modal"><div class="modal-content"><h3><i class="fas fa-lock"></i> Login Admin</h3><input type="text" id="loginUser" placeholder="Username"><input type="password" id="loginPass" placeholder="Password" style="margin-top:12px;"><div class="flex-buttons"><button id="closeLoginModal">Batal</button><button id="doLogin">Verifikasi</button></div></div></div>
 <div id="editModal" class="modal"><div class="modal-content"><h3>Edit Snippet</h3><select id="editTypeSelect"><option value="js">JS</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option><option value="bash">Bash</option></select><textarea id="editCodeArea" rows="6" style="margin-top:12px;"></textarea><div class="flex-buttons"><button id="closeEditModal">Batal</button><button id="saveEditSnippet">Simpan</button></div></div></div>
+
+<!-- SNIPPETS_START -->
+<script>
+let snippets = [];
+</script>
+<!-- SNIPPETS_END -->
+
 <script>
     (function(){
         const STORAGE_KEY = "kyro_snippets_main";
@@ -196,27 +199,26 @@
         const ADMIN_PASS = "yasirsukakecebong";
         let isAdmin = false;
         let currentEditId = null;
-        let snippets = [
-          {
-                    "id": "1781359184259-sstbt1",
-                    "type": "js",
-                    "code": "const axios = require('axios');\nconst fs = require('fs');\nconst path = require('path');\n\nasync function handleHdVideo(bot, msg) {\n    const chatId = msg.chat.id;\n    const reply = msg.reply_to_message;\n    if (!reply || !reply.video) {\n        return bot.sendMessage(chatId, '❌ Reply ke video yang mau di-HD-kan!');\n    }\n    let statusMsg = null;\n    let tempPath = null;\n    try {\n        const videoFile = await bot.getFile(reply.video.file_id);\n        const videoUrl = `https://api.telegram.org/file/bot${bot.token}/${videoFile.file_path}`;\n        statusMsg = await bot.sendMessage(chatId, '⏳ Memproses video (HD)...\\n⏱️ Estimasi: 20-30 detik');\n        \n        const apiUrl = `https://api.nexray.eu.cc/tools/v1/hdvideo?url=${encodeURIComponent(videoUrl)}&resolusi=4k`;\n        const response = await axios.get(apiUrl, { \n            timeout: 60000,\n            headers: { 'User-Agent': 'Mozilla/5.0' }\n        });\n        if (!response.data?.status || !response.data?.result) {\n            throw new Error('Gagal memproses video');\n        }\n        const downloadUrl = response.data.result;\n        \n        await bot.editMessageText('📥 Mengunduh video HD...', {\n            chat_id: chatId,\n            message_id: statusMsg.message_id\n        });\n        const videoRes = await axios.get(downloadUrl, {\n            responseType: 'stream',\n            timeout: 120000,\n            maxRedirects: 5,\n            headers: { 'User-Agent': 'Mozilla/5.0' }\n        });\n        tempPath = path.join(__dirname, `hdvid_${Date.now()}.mp4`);\n        const writer = fs.createWriteStream(tempPath);\n        videoRes.data.pipe(writer);\n        await new Promise((resolve, reject) => {\n            writer.on('finish', resolve);\n            writer.on('error', reject);\n        });\n        await bot.deleteMessage(chatId, statusMsg.message_id).catch(() => {});\n        await bot.sendVideo(chatId, tempPath, {\n            caption: '✅ Video HD berhasil!',\n            reply_to_message_id: msg.message_id\n        });\n    } catch (error) {\n        console.error('HD Video error:', error.message);\n        let errorMsg = error.message;\n        if (error.response?.status === 403) {\n            errorMsg = 'API sedang membatasi akses. Coba lagi nanti.';\n        }\n        if (statusMsg) {\n            await bot.editMessageText(`❌ Gagal: ${errorMsg}`, {\n                chat_id: chatId,\n                message_id: statusMsg.message_id\n            }).catch(() => {});\n        }\n    } finally {\n        if (tempPath && fs.existsSync(tempPath)) {\n            try { fs.unlinkSync(tempPath); } catch (err) {}\n        }\n    }\n}\n\nmodule.exports = { handleHdVideo };",
-                    "filename": "hdvidHandler.js"
-          }
-];
 
         function loadData(){
             const stored = localStorage.getItem(STORAGE_KEY);
-            if(stored) snippets = JSON.parse(stored);
-            if(!snippets || !snippets.length){
-                snippets = [
-                    { id: "init1", type: "js", code: "console.log('✨ KyroCode');\nfunction neon() { return 'glow'; }", filename: "example.js" },
+            if(stored) {
+                try {
+                    window.snippets = JSON.parse(stored);
+                } catch(e) {}
+            }
+            if(!window.snippets || !window.snippets.length){
+                window.snippets = [
+                    { id: "init1", type: "js", code: "console.log('✨ KyroCode');", filename: "example.js" },
                     { id: "init2", type: "python", code: "print('Syntax highlighting aktif')", filename: "demo.py" }
                 ];
                 saveData();
             }
+            renderSnippets();
         }
-        function saveData(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(snippets)); }
+        function saveData(){ 
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(window.snippets));
+        }
         function getBugs(){ return JSON.parse(localStorage.getItem(BUGS_KEY) || "[]"); }
         function saveBugs(b){ localStorage.setItem(BUGS_KEY, JSON.stringify(b)); }
         function getContacts(){ return JSON.parse(localStorage.getItem(CONTACTS_KEY) || "[]"); }
@@ -229,9 +231,9 @@
         }
         function renderSnippets(){
             const container = document.getElementById("snippetsContainer");
-            if(!snippets.length){ container.innerHTML = '<div class="empty-state"><i class="fas fa-database"></i> Belum ada snippet.</div>'; return; }
+            if(!window.snippets.length){ container.innerHTML = '<div class="empty-state"><i class="fas fa-database"></i> Belum ada snippet.</div>'; return; }
             let html = "";
-            snippets.forEach(s => {
+            window.snippets.forEach(s => {
                 const lang = getLang(s.type);
                 const safeCode = s.code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 html += `<div class="snippet-card" data-id="${s.id}">
@@ -265,7 +267,7 @@
                     btn.addEventListener('click', (e) => {
                         const id = btn.getAttribute('data-id');
                         if(confirm("Hapus snippet ini?")){
-                            snippets = snippets.filter(s => s.id !== id);
+                            window.snippets = window.snippets.filter(s => s.id !== id);
                             saveData();
                             renderSnippets();
                             renderAdminPanels();
@@ -293,7 +295,7 @@
                 </div>`;
             document.getElementById("logoutAdminBtn")?.addEventListener("click", logout);
             document.getElementById("exportDataBtn")?.addEventListener("click", () => {
-                const dataStr = JSON.stringify(snippets, null, 2);
+                const dataStr = JSON.stringify(window.snippets, null, 2);
                 const blob = new Blob([dataStr], {type: "application/json"});
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -314,7 +316,7 @@
                         try{
                             const imported = JSON.parse(ev.target.result);
                             if(Array.isArray(imported)){
-                                snippets = imported;
+                                window.snippets = imported;
                                 saveData();
                                 renderSnippets();
                                 alert("Impor berhasil!");
@@ -339,7 +341,7 @@
                 const filename = document.getElementById("newFilename").value.trim() || "snippet."+type;
                 if(!code){ alert("Kode tidak boleh kosong"); return; }
                 const newId = Date.now() + "-" + Math.random().toString(36).substring(2);
-                snippets.push({ id: newId, type: type, code: code, filename: filename });
+                window.snippets.push({ id: newId, type: type, code: code, filename: filename });
                 saveData();
                 renderSnippets();
                 document.getElementById("newCode").value = "";
@@ -376,7 +378,7 @@
             });
         }
         function openEditModal(id){
-            const snippet = snippets.find(s => s.id === id);
+            const snippet = window.snippets.find(s => s.id === id);
             if(!snippet) return;
             currentEditId = id;
             document.getElementById("editTypeSelect").value = snippet.type;
@@ -388,10 +390,10 @@
             const newType = document.getElementById("editTypeSelect").value;
             const newCode = document.getElementById("editCodeArea").value.trim();
             if(!newCode){ alert("Kode tidak boleh kosong"); return; }
-            const idx = snippets.findIndex(s => s.id === currentEditId);
+            const idx = window.snippets.findIndex(s => s.id === currentEditId);
             if(idx !== -1){
-                snippets[idx].type = newType;
-                snippets[idx].code = newCode;
+                window.snippets[idx].type = newType;
+                window.snippets[idx].code = newCode;
                 saveData();
                 renderSnippets();
             }
@@ -475,7 +477,6 @@
             loadData();
             const sess = sessionStorage.getItem("kyro_admin_fix");
             if(sess === "true") isAdmin = true;
-            renderSnippets();
             renderAdminPanels();
             updateDropdownMenu();
             const dots = document.getElementById("dotsMenuBtn");
