@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>KyroCode · Luxurious Snippet Vault</title>
+    <title>KyroCode · Luxurious Vault</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
@@ -14,11 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: radial-gradient(ellipse at 30% 20%, #0a0a0f, #010101);
             font-family: 'Inter', 'Segoe UI', system-ui, monospace;
@@ -48,255 +44,104 @@
             background: radial-gradient(circle at 70% 80%, rgba(120,80,220,0.08) 0%, transparent 60%);
             pointer-events: none;
         }
-        .app-container {
-            max-width: 1500px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 5;
-        }
-        .top-bar {
-            position: relative;
-            margin-bottom: 2rem;
-        }
+        .app-container { max-width: 1500px; margin: 0 auto; position: relative; z-index: 5; }
+        .top-bar { position: relative; margin-bottom: 2rem; }
         .dots-btn {
-            background: rgba(15, 15, 25, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(130, 130, 250, 0.6);
-            border-radius: 20px;
-            width: 54px;
-            height: 54px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.8rem;
-            color: #c4b5ff;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 12px rgba(100,100,240,0.3);
+            background: rgba(15,15,25,0.75); backdrop-filter: blur(12px);
+            border: 1px solid rgba(130,130,250,0.6); border-radius: 20px;
+            width: 54px; height: 54px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.8rem; color: #c4b5ff;
+            transition: all 0.2s; box-shadow: 0 0 12px rgba(100,100,240,0.3);
         }
-        .dots-btn:hover {
-            background: #1a1a2f;
-            border-color: #b794ff;
-            box-shadow: 0 0 22px #7d6eff;
-            transform: scale(1.02);
-        }
+        .dots-btn:hover { background: #1a1a2f; border-color: #b794ff; box-shadow: 0 0 22px #7d6eff; transform: scale(1.02); }
         .dropdown-menu {
-            position: absolute;
-            top: 68px;
-            left: 0;
-            background: rgba(10, 10, 20, 0.96);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(160, 140, 255, 0.5);
-            border-radius: 28px;
-            width: 260px;
-            overflow: hidden;
-            z-index: 300;
-            display: none;
-            flex-direction: column;
+            position: absolute; top: 68px; left: 0;
+            background: rgba(10,10,20,0.96); backdrop-filter: blur(20px);
+            border: 1px solid rgba(160,140,255,0.5); border-radius: 28px;
+            width: 260px; overflow: hidden; z-index: 300; display: none; flex-direction: column;
             box-shadow: 0 25px 40px -12px black, 0 0 0 1px rgba(255,240,255,0.1) inset;
         }
-        .dropdown-menu.show {
-            display: flex;
-        }
+        .dropdown-menu.show { display: flex; }
         .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 14px 22px;
-            background: transparent;
-            border: none;
-            width: 100%;
-            text-align: left;
-            color: #e2d9ff;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 16px; padding: 14px 22px;
+            background: transparent; border: none; width: 100%; text-align: left;
+            color: #e2d9ff; font-size: 0.95rem; font-weight: 500; cursor: pointer;
             transition: 0.2s;
         }
-        .dropdown-item i {
-            width: 26px;
-            font-size: 1.15rem;
-            color: #b6a6ff;
-        }
-        .dropdown-item:hover {
-            background: rgba(100, 80, 200, 0.3);
-            color: white;
-            border-left: 4px solid #b77eff;
-        }
+        .dropdown-item i { width: 26px; font-size: 1.15rem; color: #b6a6ff; }
+        .dropdown-item:hover { background: rgba(100,80,200,0.3); color: white; border-left: 4px solid #b77eff; }
         .admin-greeting {
             background: linear-gradient(125deg, #11111b, #06060c);
-            border-radius: 40px;
-            padding: 1.4rem 2rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            border: 1px solid rgba(100, 100, 220, 0.5);
+            border-radius: 40px; padding: 1.4rem 2rem; margin-bottom: 2rem;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+            border: 1px solid rgba(100,100,220,0.5);
             box-shadow: 0 12px 28px -10px black, 0 0 12px rgba(80,80,200,0.2);
         }
         .admin-greeting h2 {
-            font-size: 1.8rem;
-            font-weight: 500;
+            font-size: 1.8rem; font-weight: 500;
             background: linear-gradient(125deg, #ffffff, #bb99ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
         .logout-icon, .export-import {
-            background: rgba(30,30,55,0.8);
-            border: 1px solid #6a5acd;
-            padding: 8px 22px;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-left: 8px;
+            background: rgba(30,30,55,0.8); border: 1px solid #6a5acd;
+            padding: 8px 22px; border-radius: 60px; cursor: pointer; transition: 0.2s; margin-left: 8px;
         }
-        .logout-icon:hover, .export-import:hover {
-            background: #2a2a4a;
-            border-color: #bb99ff;
-            box-shadow: 0 0 12px #9f8aff;
-        }
+        .logout-icon:hover, .export-import:hover { background: #2a2a4a; border-color: #bb99ff; box-shadow: 0 0 12px #9f8aff; }
         .add-snippet-panel, .reports-panel {
-            background: rgba(12, 12, 24, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 36px;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(110, 100, 200, 0.45);
-            box-shadow: 0 12px 28px -8px black;
+            background: rgba(12,12,24,0.7); backdrop-filter: blur(8px);
+            border-radius: 36px; padding: 1.8rem; margin-bottom: 2rem;
+            border: 1px solid rgba(110,100,200,0.45); box-shadow: 0 12px 28px -8px black;
         }
         .form-group input, .form-group select, .form-group textarea {
-            background: #0b0b12;
-            border: 1px solid #3a3a66;
-            border-radius: 24px;
-            padding: 12px 18px;
-            color: #f0f0ff;
-            font-family: 'Fira Code', monospace;
-            transition: 0.2s;
+            background: #0b0b12; border: 1px solid #3a3a66; border-radius: 24px;
+            padding: 12px 18px; color: #f0f0ff; font-family: 'Fira Code', monospace; transition: 0.2s;
         }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: #a286ff;
-            box-shadow: 0 0 14px rgba(140,100,255,0.5);
-            outline: none;
+            border-color: #a286ff; box-shadow: 0 0 14px rgba(140,100,255,0.5); outline: none;
         }
         button.pasang-btn {
             background: linear-gradient(95deg, #2a2a44, #1b1b2c);
-            border: 1px solid #8f7eff;
-            border-radius: 60px;
-            padding: 10px 32px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-            transition: 0.2s;
+            border: 1px solid #8f7eff; border-radius: 60px; padding: 10px 32px;
+            font-weight: bold; color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+            transition: 0.2s; cursor: pointer;
         }
-        button.pasang-btn:hover {
-            background: #3f3f66;
-            border-color: #c6b0ff;
-            box-shadow: 0 0 16px #aa9aff;
-        }
+        button.pasang-btn:hover { background: #3f3f66; border-color: #c6b0ff; box-shadow: 0 0 16px #aa9aff; }
         .snippets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2rem;
-            margin-top: 1.5rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem; margin-top: 1.5rem;
         }
         .snippet-card {
-            background: rgba(14, 14, 24, 0.85);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(140, 120, 220, 0.6);
-            border-radius: 38px;
-            padding: 1.5rem;
-            transition: 0.2s ease;
-            box-shadow: 0 12px 24px -12px black;
+            background: rgba(14,14,24,0.85); backdrop-filter: blur(6px);
+            border: 1px solid rgba(140,120,220,0.6); border-radius: 38px;
+            padding: 1.5rem; transition: 0.2s; box-shadow: 0 12px 24px -12px black;
         }
-        .snippet-card:hover {
-            border-color: #cbb2ff;
-            box-shadow: 0 20px 35px -12px rgba(100, 70, 200, 0.4), 0 0 0 1px rgba(255,255,255,0.05) inset;
-            transform: translateY(-4px);
-        }
-        .code-content {
-            background: #010105;
-            padding: 1rem;
-            border-radius: 28px;
-            font-size: 0.85rem;
-            overflow-x: auto;
-            border-left: 4px solid #9b7eff;
-        }
+        .snippet-card:hover { border-color: #cbb2ff; transform: translateY(-4px); box-shadow: 0 20px 35px -12px rgba(100,70,200,0.4); }
+        .code-content { background: #010105; padding: 1rem; border-radius: 28px; overflow-x: auto; border-left: 4px solid #9b7eff; }
         .icon-btn {
-            background: rgba(50,50,80,0.7);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 4px;
-            transition: 0.2s;
+            background: rgba(50,50,80,0.7); border-radius: 50%; width: 36px; height: 36px;
+            display: inline-flex; align-items: center; justify-content: center; margin: 0 4px;
+            transition: 0.2s; cursor: pointer; border: none; color: #ddd;
         }
-        .icon-btn:hover {
-            background: #6f5fcf;
-            color: white;
-            box-shadow: 0 0 12px #bbaaff;
-        }
+        .icon-btn:hover { background: #6f5fcf; color: white; box-shadow: 0 0 12px #bbaaff; }
         .report-item, .contact-item {
-            background: #0e0e1a;
-            border-radius: 28px;
-            padding: 1rem;
-            margin-bottom: 1rem;
+            background: #0e0e1a; border-radius: 28px; padding: 1rem; margin-bottom: 1rem;
             border-left: 6px solid #9f8eff;
         }
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(16px);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px); align-items: center; justify-content: center; z-index: 1000;
         }
         .modal-content {
-            background: rgba(16, 16, 28, 0.96);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(150, 130, 255, 0.7);
-            border-radius: 52px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 550px;
-            box-shadow: 0 35px 45px -12px black;
+            background: rgba(16,16,28,0.96); backdrop-filter: blur(20px);
+            border: 1px solid rgba(150,130,255,0.7); border-radius: 52px;
+            padding: 2rem; width: 90%; max-width: 550px; box-shadow: 0 35px 45px -12px black;
         }
-        .flex-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-        }
-        hr {
-            margin: 1rem 0;
-            border-color: #4a4a7a;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 2.5rem;
-            color: #b0aaff;
-        }
-        pre[class*="language-"] {
-            border-radius: 20px;
-            margin: 0;
-            background: #020208;
-        }
-        .line-numbers .line-numbers-rows {
-            border-right: 1px solid #6a6aff;
-        }
-        .copy-feedback {
-            font-size: 0.7rem;
-            color: #bbffaa;
-            margin-top: 8px;
-            text-align: right;
-        }
+        .flex-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 1.5rem; }
+        hr { margin: 1rem 0; border-color: #4a4a7a; }
+        .empty-state { text-align: center; padding: 2.5rem; color: #b0aaff; }
+        pre[class*="language-"] { border-radius: 20px; margin: 0; background: #020208; }
+        .line-numbers .line-numbers-rows { border-right: 1px solid #6a6aff; }
     </style>
 </head>
 <body>
@@ -314,61 +159,54 @@
     </div>
     <div id="snippetsContainer" class="snippets-grid"></div>
 </div>
-<div id="bugModal" class="modal"><div class="modal-content"><h3><i class="fas fa-bug"></i> Laporkan Bug</h3><textarea id="bugDesc" rows="4" placeholder="Jelaskan bug secara detail..."></textarea><div class="flex-buttons"><button id="closeBugModal">Batal</button><button id="submitBug">Kirim Laporan</button></div></div></div>
-<div id="contactModal" class="modal"><div class="modal-content"><h3><i class="fas fa-headset"></i> Hubungi Admin</h3><textarea id="contactMsg" rows="3" placeholder="Tulis pesanmu (akan tersimpan & dilihat admin)"></textarea><div class="flex-buttons"><button id="sendContactMsgBtn"><i class="fas fa-paper-plane"></i> Kirim Pesan</button><a href="https://t.me/sigantengbahlil" target="_blank" style="text-decoration:none;"><button><i class="fab fa-telegram"></i> Telegram</button></a><a href="https://wa.me/6285664633021" target="_blank" style="text-decoration:none;"><button><i class="fab fa-whatsapp"></i> WhatsApp</button></a><button id="closeContactModal">Tutup</button></div></div></div>
+<!-- Modal2 sama seperti sebelumnya (bug, contact, login, edit) -->
+<div id="bugModal" class="modal"><div class="modal-content"><h3><i class="fas fa-bug"></i> Laporkan Bug</h3><textarea id="bugDesc" rows="4" placeholder="Jelaskan bug..."></textarea><div class="flex-buttons"><button id="closeBugModal">Batal</button><button id="submitBug">Kirim</button></div></div></div>
+<div id="contactModal" class="modal"><div class="modal-content"><h3><i class="fas fa-headset"></i> Hubungi Admin</h3><textarea id="contactMsg" rows="3" placeholder="Tulis pesan..."></textarea><div class="flex-buttons"><button id="sendContactMsgBtn"><i class="fas fa-paper-plane"></i> Kirim</button><a href="https://t.me/sigantengbahlil" target="_blank"><button><i class="fab fa-telegram"></i> Telegram</button></a><a href="https://wa.me/6285664633021" target="_blank"><button><i class="fab fa-whatsapp"></i> WhatsApp</button></a><button id="closeContactModal">Tutup</button></div></div></div>
 <div id="loginModal" class="modal"><div class="modal-content"><h3><i class="fas fa-lock"></i> Login Admin</h3><input type="text" id="loginUser" placeholder="Username"><input type="password" id="loginPass" placeholder="Password" style="margin-top:12px;"><div class="flex-buttons"><button id="closeLoginModal">Batal</button><button id="doLogin">Verifikasi</button></div></div></div>
 <div id="editModal" class="modal"><div class="modal-content"><h3>Edit Snippet</h3><select id="editTypeSelect"><option value="js">JS</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option><option value="bash">Bash</option></select><textarea id="editCodeArea" rows="6" style="margin-top:12px;"></textarea><div class="flex-buttons"><button id="closeEditModal">Batal</button><button id="saveEditSnippet">Simpan</button></div></div></div>
 <script>
     (function(){
-        const SNIPPETS_KEY = "kyro_snippets_lux";
-        const BUGS_KEY = "kyro_bug_reports_v2";
-        const CONTACTS_KEY = "kyro_contact_messages_v2";
+        const STORAGE_KEY = "kyro_snippets_main";
+        const BUGS_KEY = "kyro_bugs_main";
+        const CONTACTS_KEY = "kyro_contacts_main";
         const ADMIN_USER = "Kyro";
         const ADMIN_PASS = "yasirsukakecebong";
         let isAdmin = false;
         let currentEditId = null;
         let snippets = [];
 
-        function loadSnippets(){
-            const stored = localStorage.getItem(SNIPPETS_KEY);
+        function loadData(){
+            const stored = localStorage.getItem(STORAGE_KEY);
             if(stored) snippets = JSON.parse(stored);
-            if(!snippets.length){
+            if(!snippets || !snippets.length){
                 snippets = [
-                    { id: "init1", type: "js", code: "console.log('✨ KyroCode Premium Vault');\nfunction glowEffect() { return 'neon'; }" },
-                    { id: "init2", type: "python", code: "print('Syntax highlighting aktif')\nfor i in range(5):\n    print(f'Line {i}')" },
-                    { id: "init3", type: "html", code: "<div class='luxury-card'>\n  <h1>Kode mewah</h1>\n</div>" }
+                    { id: "init1", type: "js", code: "console.log('✨ KyroCode');\nfunction neon() { return 'glow'; }" },
+                    { id: "init2", type: "python", code: "print('Syntax highlighting aktif')" }
                 ];
-                saveSnippets();
+                saveData();
             }
         }
-        function saveSnippets(){ localStorage.setItem(SNIPPETS_KEY, JSON.stringify(snippets)); }
+        function saveData(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(snippets)); }
         function getBugs(){ return JSON.parse(localStorage.getItem(BUGS_KEY) || "[]"); }
         function saveBugs(b){ localStorage.setItem(BUGS_KEY, JSON.stringify(b)); }
         function getContacts(){ return JSON.parse(localStorage.getItem(CONTACTS_KEY) || "[]"); }
         function saveContacts(c){ localStorage.setItem(CONTACTS_KEY, JSON.stringify(c)); }
 
         function escapeHtml(str){ return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
-        function getLangFromType(type){
-            if(type === 'js') return 'javascript';
-            if(type === 'python') return 'python';
-            if(type === 'html') return 'markup';
-            if(type === 'css') return 'css';
-            if(type === 'bash') return 'bash';
-            return 'javascript';
+        function getLang(type){
+            const map = { js:'javascript', python:'python', html:'markup', css:'css', bash:'bash' };
+            return map[type] || 'javascript';
         }
         function renderSnippets(){
             const container = document.getElementById("snippetsContainer");
-            if(!snippets.length){
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-database"></i> Belum ada snippet. Admin bisa menambahkan.</div>';
-                return;
-            }
+            if(!snippets.length){ container.innerHTML = '<div class="empty-state"><i class="fas fa-database"></i> Belum ada snippet.</div>'; return; }
             let html = "";
             snippets.forEach(s => {
-                const lang = getLangFromType(s.type);
-                const escapedCode = s.code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                const lang = getLang(s.type);
+                const safeCode = s.code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 html += `<div class="snippet-card" data-id="${s.id}">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                                <span style="background:linear-gradient(145deg,#2a2a4a,#1e1e3a); padding:5px 18px; border-radius:60px; font-size:0.7rem; font-weight:700; letter-spacing:1px;">${s.type.toUpperCase()}</span>
+                                <span style="background:linear-gradient(145deg,#2a2a4a,#1e1e3a); padding:5px 18px; border-radius:60px; font-size:0.7rem; font-weight:700;">${s.type.toUpperCase()} • ${s.filename || 'snippet'}</span>
                                 <div>
                                     <button class="icon-btn copy-btn" data-code="${s.code.replace(/"/g, '&quot;')}"><i class="fas fa-copy"></i></button>
                                     ${isAdmin ? `<button class="icon-btn edit-btn" data-id="${s.id}"><i class="fas fa-edit"></i></button>
@@ -376,9 +214,8 @@
                                 </div>
                             </div>
                             <div class="code-content line-numbers">
-                                <pre class="language-${lang}"><code class="language-${lang}">${escapedCode}</code></pre>
+                                <pre class="language-${lang}"><code class="language-${lang}">${safeCode}</code></pre>
                             </div>
-                            <div class="copy-feedback" id="copyMsg-${s.id}" style="display:none;">✓ Tersalin</div>
                         </div>`;
             });
             container.innerHTML = html;
@@ -387,7 +224,7 @@
                 btn.addEventListener('click', async (e) => {
                     const code = btn.getAttribute('data-code');
                     await navigator.clipboard.writeText(code);
-                    alert("Kode tersalin ke clipboard!");
+                    alert("Kode tersalin!");
                 });
             });
             if(isAdmin){
@@ -396,9 +233,10 @@
                 });
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
+                        const id = btn.getAttribute('data-id');
                         if(confirm("Hapus snippet ini?")){
-                            snippets = snippets.filter(s => s.id !== btn.getAttribute('data-id'));
-                            saveSnippets();
+                            snippets = snippets.filter(s => s.id !== id);
+                            saveData();
                             renderSnippets();
                             renderAdminPanels();
                         }
@@ -406,7 +244,6 @@
                 });
             }
         }
-
         function renderAdminPanels(){
             if(!isAdmin){
                 document.getElementById("adminGreetingPanel").style.display = "none";
@@ -420,8 +257,8 @@
             document.getElementById("adminGreetingPanel").innerHTML = `
                 <div class="admin-greeting">
                     <h2><i class="fas fa-crown"></i> HALO DEVELOPER KYRO</h2>
-                    <div><button class="export-import" id="exportDataBtn"><i class="fas fa-download"></i> Ekspor Snippet</button>
-                    <button class="export-import" id="importDataBtn"><i class="fas fa-upload"></i> Impor Snippet</button>
+                    <div><button class="export-import" id="exportDataBtn"><i class="fas fa-download"></i> Ekspor</button>
+                    <button class="export-import" id="importDataBtn"><i class="fas fa-upload"></i> Impor</button>
                     <button class="logout-icon" id="logoutAdminBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
                 </div>`;
             document.getElementById("logoutAdminBtn")?.addEventListener("click", logout);
@@ -448,9 +285,9 @@
                             const imported = JSON.parse(ev.target.result);
                             if(Array.isArray(imported)){
                                 snippets = imported;
-                                saveSnippets();
+                                saveData();
                                 renderSnippets();
-                                alert("Impor berhasil! Snippet diperbarui.");
+                                alert("Impor berhasil!");
                             } else throw new Error();
                         } catch(err){ alert("File JSON tidak valid"); }
                     };
@@ -459,29 +296,33 @@
                 input.click();
             });
             document.getElementById("addSnippetPanel").innerHTML = `
-                <h3 style="margin-bottom:1rem;"><i class="fas fa-plus-circle"></i> Tambah Kode Baru (syntax akan tampil indah)</h3>
+                <h3 style="margin-bottom:1rem;"><i class="fas fa-plus-circle"></i> Tambah Kode Baru</h3>
                 <div class="form-row" style="display:flex; gap:1rem; flex-wrap:wrap;">
-                    <div class="form-group" style="flex:1;"><label>Jenis Kode</label><select id="newType"><option value="js">JavaScript</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option><option value="bash">Bash</option></select></div>
-                    <div class="form-group" style="flex:2;"><label>Kode snippet</label><textarea id="newCode" rows="3" placeholder="console.log('code kamu');"></textarea></div>
+                    <div class="form-group" style="flex:1;"><label>Nama File</label><input type="text" id="newFilename" placeholder="contoh: script.js"></div>
+                    <div class="form-group" style="flex:1;"><label>Jenis Kode</label><select id="newType"><option value="js">JS</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option><option value="bash">Bash</option></select></div>
+                    <div class="form-group" style="flex:2;"><label>Kode snippet</label><textarea id="newCode" rows="3" placeholder="console.log('contoh');"></textarea></div>
                 </div>
                 <button class="pasang-btn" id="pasangBtn"><i class="fas fa-plug"></i> PASANG</button>`;
             document.getElementById("pasangBtn")?.addEventListener("click", () => {
                 const type = document.getElementById("newType").value;
                 const code = document.getElementById("newCode").value.trim();
+                const filename = document.getElementById("newFilename").value.trim() || "snippet."+type;
                 if(!code){ alert("Kode tidak boleh kosong"); return; }
-                snippets.push({ id: Date.now() + "-" + Math.random().toString(36), type, code });
-                saveSnippets();
+                const newId = Date.now() + "-" + Math.random().toString(36).substring(2);
+                snippets.push({ id: newId, type: type, code: code, filename: filename });
+                saveData();
                 renderSnippets();
                 document.getElementById("newCode").value = "";
+                document.getElementById("newFilename").value = "";
             });
             const bugs = getBugs();
             const contacts = getContacts();
-            let bugsHtml = `<h3><i class="fas fa-bug"></i> LAPORAN BUG MASUK</h3>`;
+            let bugsHtml = `<h3><i class="fas fa-bug"></i> LAPORAN BUG</h3>`;
             if(bugs.length === 0) bugsHtml += `<div class="empty-state">Tidak ada laporan</div>`;
             else bugs.forEach((b, idx) => {
                 bugsHtml += `<div class="report-item"><strong>${new Date(b.date).toLocaleString()}</strong><br/>${escapeHtml(b.message)}<br/><button class="delete-report" data-type="bug" data-idx="${idx}" style="margin-top:8px;">Hapus</button></div>`;
             });
-            let contactsHtml = `<h3><i class="fas fa-envelope"></i> PESAN CONTACT ADMIN</h3>`;
+            let contactsHtml = `<h3><i class="fas fa-envelope"></i> PESAN CONTACT</h3>`;
             if(contacts.length === 0) contactsHtml += `<div class="empty-state">Belum ada pesan</div>`;
             else contacts.forEach((c, idx) => {
                 contactsHtml += `<div class="contact-item"><strong>${new Date(c.date).toLocaleString()}</strong><br/>${escapeHtml(c.message)}<br/><button class="delete-report" data-type="contact" data-idx="${idx}" style="margin-top:8px;">Hapus</button></div>`;
@@ -504,58 +345,12 @@
                 });
             });
         }
-
-        function openBugModal(){ document.getElementById("bugModal").style.display = "flex"; }
-        function closeBugModal(){ document.getElementById("bugModal").style.display = "none"; }
-        function submitBug(){
-            const msg = document.getElementById("bugDesc").value.trim();
-            if(!msg){ alert("Tulis laporan bug."); return; }
-            const bugs = getBugs();
-            bugs.push({ date: new Date().toISOString(), message: msg });
-            saveBugs(bugs);
-            alert("Laporan bug terkirim. Admin akan lihat.");
-            document.getElementById("bugDesc").value = "";
-            closeBugModal();
-        }
-        function openContactModal(){ document.getElementById("contactModal").style.display = "flex"; }
-        function closeContactModal(){ document.getElementById("contactModal").style.display = "none"; }
-        function sendContactMsg(){
-            const msg = document.getElementById("contactMsg").value.trim();
-            if(!msg){ alert("Tulis pesan."); return; }
-            const contacts = getContacts();
-            contacts.push({ date: new Date().toISOString(), message: msg });
-            saveContacts(contacts);
-            alert("Pesan terkirim ke admin.");
-            document.getElementById("contactMsg").value = "";
-            closeContactModal();
-        }
-        function openLoginModal(){ document.getElementById("loginModal").style.display = "flex"; }
-        function closeLoginModal(){ document.getElementById("loginModal").style.display = "none"; }
-        function onLogin(){
-            const user = document.getElementById("loginUser").value;
-            const pass = document.getElementById("loginPass").value;
-            if(user === ADMIN_USER && pass === ADMIN_PASS){
-                isAdmin = true;
-                sessionStorage.setItem("kyro_admin_lux", "true");
-                renderAdminPanels();
-                renderSnippets();
-                updateDropdownMenu();
-                closeLoginModal();
-            } else alert("Username atau password salah!");
-        }
-        function logout(){
-            isAdmin = false;
-            sessionStorage.removeItem("kyro_admin_lux");
-            renderAdminPanels();
-            renderSnippets();
-            updateDropdownMenu();
-        }
         function openEditModal(id){
-            const snip = snippets.find(s => s.id === id);
-            if(!snip) return;
+            const snippet = snippets.find(s => s.id === id);
+            if(!snippet) return;
             currentEditId = id;
-            document.getElementById("editTypeSelect").value = snip.type;
-            document.getElementById("editCodeArea").value = snip.code;
+            document.getElementById("editTypeSelect").value = snippet.type;
+            document.getElementById("editCodeArea").value = snippet.code;
             document.getElementById("editModal").style.display = "flex";
         }
         function saveEdit(){
@@ -567,11 +362,56 @@
             if(idx !== -1){
                 snippets[idx].type = newType;
                 snippets[idx].code = newCode;
-                saveSnippets();
+                saveData();
                 renderSnippets();
             }
             document.getElementById("editModal").style.display = "none";
             currentEditId = null;
+        }
+        function openBugModal(){ document.getElementById("bugModal").style.display = "flex"; }
+        function closeBugModal(){ document.getElementById("bugModal").style.display = "none"; }
+        function submitBug(){
+            const msg = document.getElementById("bugDesc").value.trim();
+            if(!msg){ alert("Tulis laporan bug."); return; }
+            const bugs = getBugs();
+            bugs.push({ date: new Date().toISOString(), message: msg });
+            saveBugs(bugs);
+            alert("Laporan terkirim.");
+            document.getElementById("bugDesc").value = "";
+            closeBugModal();
+        }
+        function openContactModal(){ document.getElementById("contactModal").style.display = "flex"; }
+        function closeContactModal(){ document.getElementById("contactModal").style.display = "none"; }
+        function sendContactMsg(){
+            const msg = document.getElementById("contactMsg").value.trim();
+            if(!msg){ alert("Tulis pesan."); return; }
+            const contacts = getContacts();
+            contacts.push({ date: new Date().toISOString(), message: msg });
+            saveContacts(contacts);
+            alert("Pesan terkirim.");
+            document.getElementById("contactMsg").value = "";
+            closeContactModal();
+        }
+        function openLoginModal(){ document.getElementById("loginModal").style.display = "flex"; }
+        function closeLoginModal(){ document.getElementById("loginModal").style.display = "none"; }
+        function onLogin(){
+            const user = document.getElementById("loginUser").value;
+            const pass = document.getElementById("loginPass").value;
+            if(user === ADMIN_USER && pass === ADMIN_PASS){
+                isAdmin = true;
+                sessionStorage.setItem("kyro_admin_fix", "true");
+                renderAdminPanels();
+                renderSnippets();
+                updateDropdownMenu();
+                closeLoginModal();
+            } else alert("Username atau password salah!");
+        }
+        function logout(){
+            isAdmin = false;
+            sessionStorage.removeItem("kyro_admin_fix");
+            renderAdminPanels();
+            renderSnippets();
+            updateDropdownMenu();
         }
         function updateDropdownMenu(){
             const menu = document.getElementById("dropdownMenu");
@@ -602,8 +442,8 @@
             });
         }
         function init(){
-            loadSnippets();
-            const sess = sessionStorage.getItem("kyro_admin_lux");
+            loadData();
+            const sess = sessionStorage.getItem("kyro_admin_fix");
             if(sess === "true") isAdmin = true;
             renderSnippets();
             renderAdminPanels();
